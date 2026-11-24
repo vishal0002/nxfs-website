@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" role="img" aria-label="NXFS">
+  <title>NXFS</title>
+  <g fill="#2a3a55">
+    <rect x="0" y="0" width="6" height="6"/>
+    <rect x="8" y="0" width="6" height="6"/>
+    <rect x="16" y="0" width="6" height="6"/>
+    <rect x="0" y="8" width="6" height="6"/>
+    <rect x="16" y="8" width="6" height="6"/>
+    <rect x="0" y="16" width="6" height="6"/>
+    <rect x="8" y="16" width="6" height="6"/>
+  </g>
+  <rect x="8" y="8" width="6" height="6" fill="#5cc8ff"/>
+  <rect x="16.75" y="16.75" width="4.5" height="4.5" fill="none" stroke="#5cc8ff" stroke-width="1.5"/>
+</svg>

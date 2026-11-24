@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 166 34" role="img" aria-label="NXFS">
+  <title>NXFS</title>
+  <!-- N -->
+  <path fill="#e6edf7" d="M0 0h6v6h-6zM0 7h6v6h-6zM0 14h6v6h-6zM0 21h6v6h-6zM0 28h6v6h-6zM28 0h6v6h-6zM28 7h6v6h-6zM28 14h6v6h-6zM28 21h6v6h-6zM28 28h6v6h-6zM7 7h6v6h-6zM14 14h6v6h-6zM21 21h6v6h-6z"/>
+  <!-- X : crossing extents, accent -->
+  <path fill="#5cc8ff" d="M44 0h6v6h-6zM72 0h6v6h-6zM51 7h6v6h-6zM65 7h6v6h-6zM58 14h6v6h-6zM51 21h6v6h-6zM65 21h6v6h-6zM44 28h6v6h-6zM72 28h6v6h-6z"/>
+  <!-- F -->
+  <path fill="#e6edf7" d="M88 0h6v6h-6zM88 7h6v6h-6zM88 14h6v6h-6zM88 21h6v6h-6zM88 28h6v6h-6zM95 0h6v6h-6zM102 0h6v6h-6zM109 0h6v6h-6zM116 0h6v6h-6zM95 14h6v6h-6zM102 14h6v6h-6zM109 14h6v6h-6z"/>
+  <!-- S -->
+  <path fill="#e6edf7" d="M139 0h6v6h-6zM146 0h6v6h-6zM153 0h6v6h-6zM160 0h6v6h-6zM132 7h6v6h-6zM139 14h6v6h-6zM146 14h6v6h-6zM153 14h6v6h-6zM160 21h6v6h-6zM132 28h6v6h-6zM139 28h6v6h-6zM146 28h6v6h-6zM153 28h6v6h-6z"/>
+</svg>
