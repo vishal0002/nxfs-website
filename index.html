@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>NXFS: a filesystem written entirely in Rust · Beta 3</title>
+  <meta name="description" content="NXFS is a filesystem written entirely in Rust, heading for open source. Beta 3 was qualified on 23 Nov 2026: 480,000 fuzzed images with 0 panics, a 9-chunk crash sweep, and 0 pjdfstest failures. What hasn't been tested is listed too.">
+  <meta name="theme-color" content="#05070d">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://nxfs.evovhil.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NXFS · a filesystem written entirely in Rust">
+  <meta property="og:description" content="Beta 3 qualification, straight from the logs, including what hasn't been tested. Going open source. Stay tuned.">
+  <meta property="og:url" content="https://nxfs.evovhil.com/">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/nxfs.css">
+  <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/countdown.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="blockmap" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="NXFS, back to top">
+      <img class="mark" src="assets/img/nxfs-mark.svg" alt="" width="20" height="20">
+      <img class="word" src="assets/img/nxfs-wordmark.svg" alt="NXFS" width="73" height="15">
+    </a>
+    <span class="tag">v0.12.0-beta.3 · <span class="rust">Rust</span></span>
+  </div>
+  <div class="progress" aria-hidden="true"></div>
+</header>
+
+<main id="main">
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section class="hero" id="top" aria-labelledby="hero-title"
+         data-ts="2026-11-23 13:50:02" data-log="00_environment.log">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="stamp"><span class="ts">0x0000</span><span>filesystem engineering</span></div>
+      <img class="word-xl" src="assets/img/nxfs-wordmark.svg" alt="" width="560" height="115">
+      <h1 id="hero-title"><span class="sr-only">NXFS: </span>A filesystem written entirely in <span class="r">Rust</span>.<br>Going <span class="o">open source</span>.</h1>
+      <p class="lead">
+        No marketing numbers. Everything below comes from the Beta&nbsp;3 qualification
+        run of <strong class="hi">23&nbsp;November&nbsp;2026</strong>: about three hours of
+        logs, every stage <code>exit 0</code>. What wasn't tested is listed too.
+      </p>
+      <ul class="chips" aria-label="Status">
+        <li><span class="chip chip--rust">100% Rust</span></li>
+        <li><span class="chip chip--info">Beta 3 · <span class="mono">3843290</span></span></li>
+        <li><span class="chip chip--pending">Not production-ready</span></li>
+        <li><span class="chip chip--untested">xfstests: never run</span></li>
+      </ul>
+    </div>
+
+    <div class="panel frame countdown-box" aria-labelledby="cd-title">
+      <div class="bar">
+        <span class="label" id="cd-title">T-minus · Asia/Kolkata</span>
+        <span class="label accent">● live</span>
+      </div>
+      <dl class="countdown" data-countdown>
+        <div><dt>Days</dt><dd data-unit="d">--</dd></div>
+        <div><dt>Hours</dt><dd data-unit="h">--</dd></div>
+        <div><dt>Min</dt><dd data-unit="m">--</dd></div>
+        <div><dt>Sec</dt><dd data-unit="s">--</dd></div>
+      </dl>
+      <p class="countdown-note">
+        to <time datetime="2027-01-01T00:00:00+05:30">1 Jan 2027 · 00:00:00 IST</time>
+      </p>
+      <p class="sr-only" aria-live="polite" data-countdown-summary></p>
+      <noscript><p class="countdown-note">Countdown target: 1 January 2027, 00:00 IST.</p></noscript>
+    </div>
+  </div>
+  <div class="wrap"><a class="scroll-cue" href="#s-env"><i aria-hidden="true"></i>Scroll down to replay the Beta 3 run</a></div>
+</section>
+
+<!-- ═══════════════════════════ 00 ENV ═══════════════════════════ -->
+<section class="stage" id="s-env" aria-labelledby="env-title"
+         data-ts="2026-11-23 13:50:02" data-log="00_environment.log">
+  <div class="wrap split">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">13:50:02 IST</span><span class="file">00_environment.log</span></div>
+      <h2 id="env-title">The machine, the toolchain, and the limits.</h2>
+      <p class="lead">
+        Every stage ran unprivileged with a memory cap and a timeout.
+        This is a development VM, not a lab, and all the figures below were measured on it.
+      </p>
+    </div>
+    <div class="term reveal">
+      <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>excerpt · 00_environment.log</span></div>
+<pre class="typed"><span><span class="c">## 2026-11-23T13:50:02+05:30 environment</span></span><span>rustc <span class="p">1.100.0</span> (0ef1bc386 2026-11-09)</span><span>LLVM version: 23.1.5</span><span>cargo 1.100.0 (3acc79c0c 2026-11-05)</span><span>base HEAD: <span class="p">384329053c58</span>… (branch nxfs/dev)</span><span>cpus: 14</span><span>Mem:  11962 MiB total</span><span>caps: CAP_KB=8000000 TMO=1800 JOBS=4 THREADS=4</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 01 RUST ═══════════════════════════ -->
+<section class="stage" id="s-rust" aria-labelledby="rust-title"
+         data-ts="2026-11-23 13:55:40" data-log="07_nostd_uefi_builds.log">
+  <div class="wrap">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">13:50:02 → 13:55:56 IST</span><span class="file">01_fmt_clippy.log</span><span class="file">07_nostd_uefi_builds.log</span></div>
+      <h2 id="rust-title">Rust from the top down to bare metal.</h2>
+      <p class="lead">
+        The same library builds for a hosted OS, for bare metal on three CPU architectures,
+        and as a UEFI target. Clippy runs with <code>-D warnings</code>, so any warning
+        fails the build.
+      </p>
+    </div>
+
+    <div class="grid g4 reveal">
+      <div class="stat good"><span class="n" data-count="8">8<small>/8</small></span><span class="k">bare-metal + UEFI builds</span></div>
+      <div class="stat good"><span class="n" data-count="4">4<small>/4</small></span><span class="k">clippy configs, -D warnings</span></div>
+      <div class="stat"><span class="n">137</span><span class="k">files in the packaged crate</span></div>
+      <div class="stat"><span class="n">1.2<small> MiB</small></span><span class="k">compressed .crate (2.6 MiB)</span></div>
+    </div>
+
+    <div class="term reveal" style="margin-top:1rem">
+      <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>excerpt · 07_nostd_uefi_builds.log</span></div>
+<pre class="typed"><span><span class="c">$ cargo build --release --lib --no-default-features --target</span> <span class="p">x86_64-unknown-none</span></span><span>    Finished `release` profile [optimized] target(s) in 2.55s   <span class="ok">exit 0</span></span><span><span class="c">$ … --target</span> <span class="p">aarch64-unknown-none</span></span><span>    Finished `release` profile [optimized] target(s) in 2.55s   <span class="ok">exit 0</span></span><span><span class="c">$ … --target</span> <span class="p">riscv64gc-unknown-none-elf</span></span><span>    Finished `release` profile [optimized] target(s) in 2.50s   <span class="ok">exit 0</span></span><span><span class="c">$ … --target</span> <span class="p">x86_64-unknown-uefi</span></span><span>    Finished `release` profile [optimized] target(s) in 2.23s   <span class="ok">exit 0</span></span></pre>
+    </div>
+    <p class="excerpt-note">Release builds shown. Each target was also built in debug: 8 builds, all <code>exit 0</code>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 02 SUITES ═══════════════════════════ -->
+<section class="stage" id="s-suites" aria-labelledby="suites-title"
+         data-ts="2026-11-23 13:50:13" data-log="06_v12_release.log">
+  <div class="wrap">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">13:50:13 → 14:31 IST</span><span class="file">06</span><span class="file">02</span><span class="file">17</span><span class="file">18</span></div>
+      <h2 id="suites-title">One suite, four ways. Zero failures.</h2>
+      <p class="lead">
+        The suite ran in release, in debug, as a plain <code>cargo test</code>, and inside the
+        packaged crate after it was unpacked. The single ignored test is the heavy crash sweep,
+        which is too slow for the normal suite and runs separately below.
+      </p>
+    </div>
+
+    <div class="rows reveal">
+      <div class="row"><span class="what">Release · library + crash sweeps + CLI</span><span class="res">209 / 0 / 1</span><span class="meta">06_v12_release.log · 190 + 15 + 4 passed · 0 failed · 1 ignored</span></div>
+      <div class="row"><span class="what">Debug · library + crash sweeps + CLI</span><span class="res">216 / 0 / 1</span><span class="meta">02_debug_suite.log · 197 + 15 + 4 passed · crash tests 646.66 s</span></div>
+      <div class="row"><span class="what">Plain <code>cargo test</code></span><span class="res">216 / 0 / 1</span><span class="meta">17_plain_cargo_test.log · 212 + 4 passed</span></div>
+      <div class="row"><span class="what">Packaged crate, unpacked, tested</span><span class="res">216 / 0 / 1</span><span class="meta">18_package.log · nxfs-0.12.0-beta.3.crate · 212 + 4 passed</span></div>
+    </div>
+    <p class="excerpt-note">Format: passed / failed / ignored.</p>
+
+    <div class="ticker" aria-label="Some of the test names from 06_v12_release.log">
+      <ul>
+        <li>crash_sweep_snapshots<b>ok</b></li>
+        <li>io_error_at_every_point_of_a_commit_is_handled<b>ok</b></li>
+        <li>raidz_reconstructs_any_missing_member_and_raidz2_any_two<b>ok</b></li>
+        <li>boot_reader_allocates_nothing<b>ok</b></li>
+        <li>unlinked_open_file_keeps_data_until_release_and_across_crash<b>ok</b></li>
+        <li>full_volume_unlink_truncate_rename_never_fail_partially<b>ok</b></li>
+        <li>a_corrupted_copy_is_never_served_and_scrub_heals_it<b>ok</b></li>
+        <li>crc_valid_but_misplaced_or_stale_nodes_are_rejected<b>ok</b></li>
+        <li>repair_never_frees_a_data_extent_whose_item_says_metadata<b>ok</b></li>
+        <li>model_checked_random_namespace_ops<b>ok</b></li>
+        <li>aud04_commit_generation_at_u64_max_is_refused<b>ok</b></li>
+        <li>snapshot_isolation_both_ways<b>ok</b></li>
+        <li>corrupted_compressed_block_is_detected<b>ok</b></li>
+        <li>fuzz_mutated_images_never_panic<b>ok</b></li>
+        <!-- duplicated for a seamless loop -->
+        <li aria-hidden="true">crash_sweep_snapshots<b>ok</b></li>
+        <li aria-hidden="true">io_error_at_every_point_of_a_commit_is_handled<b>ok</b></li>
+        <li aria-hidden="true">raidz_reconstructs_any_missing_member_and_raidz2_any_two<b>ok</b></li>
+        <li aria-hidden="true">boot_reader_allocates_nothing<b>ok</b></li>
+        <li aria-hidden="true">unlinked_open_file_keeps_data_until_release_and_across_crash<b>ok</b></li>
+        <li aria-hidden="true">full_volume_unlink_truncate_rename_never_fail_partially<b>ok</b></li>
+        <li aria-hidden="true">a_corrupted_copy_is_never_served_and_scrub_heals_it<b>ok</b></li>
+        <li aria-hidden="true">crc_valid_but_misplaced_or_stale_nodes_are_rejected<b>ok</b></li>
+        <li aria-hidden="true">repair_never_frees_a_data_extent_whose_item_says_metadata<b>ok</b></li>
+        <li aria-hidden="true">model_checked_random_namespace_ops<b>ok</b></li>
+        <li aria-hidden="true">aud04_commit_generation_at_u64_max_is_refused<b>ok</b></li>
+        <li aria-hidden="true">snapshot_isolation_both_ways<b>ok</b></li>
+        <li aria-hidden="true">corrupted_compressed_block_is_detected<b>ok</b></li>
+        <li aria-hidden="true">fuzz_mutated_images_never_panic<b>ok</b></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 03 WHAT IT IS ═══════════════════════════ -->
+<section class="stage" id="s-arch" aria-labelledby="arch-title"
+         data-ts="2026-11-23 13:50:13" data-log="06_v12_release.log">
+  <div class="wrap split">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">0x0003</span><span>architecture, as the tests describe it</span></div>
+      <h2 id="arch-title">What's inside.</h2>
+      <p class="lead">
+        This isn't a feature list. Every item below has named tests behind it in the Beta&nbsp;3
+        logs, and its status says how far that testing goes.
+      </p>
+      <div class="arch reveal" aria-label="Layer diagram">
+        <div class="layer l-if"><span class="label">interfaces</span>
+          <ul><li>FUSE mount</li><li>CLI: mkfs · fsck · repair</li><li>boot reader</li></ul></div>
+        <div class="arrow" aria-hidden="true">▼</div>
+        <div class="layer"><span class="label">engine</span>
+          <ul><li>B-tree</li><li>commit ring</li><li>snapshots · subvolumes</li><li>xattrs</li><li>LZ4</li><li>prealloc · punch · zero</li></ul></div>
+        <div class="arrow" aria-hidden="true">▼</div>
+        <div class="layer l-dev"><span class="label">devices</span>
+          <ul><li>single volume</li><li>mirror pool</li><li>RAID-Z / RAID-Z2</li><li>scrub · resilver</li></ul></div>
+      </div>
+    </div>
+
+    <div class="caps reveal">
+      <div class="cap"><span class="t">Single-volume engine via FUSE</span><span class="chip chip--pass">Tested</span>
+        <span class="e">46 live FUSE checks · fsx · fsstress · pjdfstest (unprivileged)</span></div>
+      <div class="cap"><span class="t">Commit ring, older slots kept valid</span><span class="chip chip--pass">Tested</span>
+        <span class="e">commit_ring_rotates_and_older_slots_remain_valid · abort_leaves_committed_state_untouched</span></div>
+      <div class="cap"><span class="t">Snapshots &amp; read-only subvolumes</span><span class="chip chip--pass">Tested</span>
+        <span class="e">crash_sweep_snapshots · snapshot_isolation_both_ways · EROFS on a ro subvolume (FUSE)</span></div>
+      <div class="cap"><span class="t">LZ4 compression</span><span class="chip chip--pass">Tested</span>
+        <span class="e">crash_sweep_lz4 · corrupted_compressed_block_is_detected</span></div>
+      <div class="cap"><span class="t">Mirror and RAID-Z pools</span><span class="chip chip--pass">Tested</span>
+        <span class="e">library suite + 120,000 mutated pools · image files, not physical disks</span></div>
+      <div class="cap"><span class="t">fsck and repair</span><span class="chip chip--pass">Tested</span>
+        <span class="e">repair_* tests · 44,564 repairs completed under fuzzing</span></div>
+      <div class="cap"><span class="t">Boot reader, multi-device</span><span class="chip chip--unsupported">Unsupported</span>
+        <span class="e">single-device volumes only; boot_reader_refuses_pools_and_v11_images</span></div>
+      <div class="cap"><span class="t">Pool <code>replace</code></span><span class="chip chip--unsupported">Unsupported</span>
+        <span class="e">REPORT §4: no pool replace</span></div>
+      <div class="cap"><span class="t">Block-device discard path</span><span class="chip chip--untested">Untested</span>
+        <span class="e">discard logic is covered by library tests; the block-device path was not exercised</span></div>
+      <div class="cap"><span class="t">Bounded-memory fsck (R2)</span><span class="chip chip--pending">Not yet qualified</span>
+        <span class="e">deferred · per-call transient heap is measured, not bounded</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 04 HEAVY SWEEP ═══════════════════════════ -->
+<section class="stage" id="s-sweep" aria-labelledby="sweep-title"
+         data-ts="2026-11-23 14:37:58" data-log="08_heavy_multilevel_sweep.log">
+  <div class="wrap">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">14:37:58 → 16:55 IST</span><span class="file">08_heavy_multilevel_sweep.log</span></div>
+      <h2 id="sweep-title">Crash it at every write.</h2>
+      <p class="lead">
+        A workload that splits and merges a deep B-tree performs 384 write events. The sweep
+        cuts the run at <em>every</em> crash point from 0 to 384, then mounts and checks what's
+        left. It ran as 9 chunks, and each one ended <code>1 passed; 0 failed</code>.
+      </p>
+    </div>
+
+    <div class="grid g3 reveal">
+      <div class="stat"><span class="n" data-count="2310">2,310</span><span class="k">crash images</span></div>
+      <div class="stat"><span class="n" data-count="46104">46,104</span><span class="k">recovery images</span></div>
+      <div class="stat"><span class="n">71<small> min</small></span><span class="k">4,261.82 s of sweep time</span></div>
+    </div>
+
+    <div class="cmap reveal" data-chunks="0:46,46:92,92:138,138:184,184:230,230:276,276:322,322:369,369:385"
+         role="img" aria-label="385 crash points, 0 to 384, swept in 9 chunks. Points 369 to 384 were the gap found and closed during this run."></div>
+    <div class="legend-line"><span>chunks 1–8</span><span class="l2">alternate chunk</span><span class="l3">369..385 · gap closed in this run</span></div>
+
+    <div class="notice-gap panel reveal" style="margin-top:1.5rem;border-left:3px solid var(--st-untested)">
+      <h3>A gap we found in our own test harness.</h3>
+      <p style="margin:0">
+        Beta&nbsp;2's workload had 368 write events, so the chunk list ended at 369. In Beta&nbsp;3,
+        balanced leaf splits pushed the workload to 384 events, which meant crash points 369 to 384
+        were never being swept. This run found that, made the last chunk open-ended
+        (<code>369:1000000</code>, clamped to the real event count), and ran it: 96 crash images,
+        5,712 recovery images, pass.
+      </p>
+    </div>
+
+    <div class="chunks reveal" aria-label="Per-chunk results">
+      <div><span class="rg">0..46</span><span class="rc">276 img · 0 rec</span><span class="tm">34.28 s</span></div>
+      <div><span class="rg">46..92</span><span class="rc">276 img · 0 rec</span><span class="tm">33.31 s</span></div>
+      <div><span class="rg">92..138</span><span class="rc">276 img · 5,376 rec</span><span class="tm">533.26 s</span></div>
+      <div><span class="rg">138..184</span><span class="rc">276 img · 5,784 rec</span><span class="tm">539.53 s</span></div>
+      <div><span class="rg">184..230</span><span class="rc">276 img · 9,656 rec</span><span class="tm">866.15 s</span></div>
+      <div><span class="rg">230..276</span><span class="rc">276 img · 7,544 rec</span><span class="tm">674.06 s</span></div>
+      <div><span class="rg">276..322</span><span class="rc">276 img · 6,120 rec</span><span class="tm">554.00 s</span></div>
+      <div><span class="rg">322..369</span><span class="rc">282 img · 5,912 rec</span><span class="tm">532.94 s</span></div>
+      <div class="gap"><span class="rg">369..385</span><span class="rc">96 img · 5,712 rec</span><span class="tm">494.29 s</span></div>
+    </div>
+
+    <div class="term reveal" style="margin-top:1rem">
+      <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>excerpt · 08_heavy_multilevel_sweep.log</span></div>
+<pre class="typed"><span><span class="c">## 2026-11-23T16:46:54+05:30 env NXFS_SWEEP_RANGE=369:1000000 cargo test --release …</span></span><span>running 1 test</span><span>multilevel_tree: 384 events (swept <span class="w">369..385</span>), Stats { images: 96, recovery_images: 5712, newer_state: 5802, recovery_writes: 1428 }</span><span>test v12::crash_tests::crash_sweep_multilevel_tree_split_and_merge ... <span class="ok">ok</span></span><span>test result: <span class="ok">ok</span>. 1 passed; 0 failed; 0 ignored; 0 measured; 212 filtered out; finished in 494.29s</span></pre>
+    </div>
+    <p class="excerpt-note">The regular crash-test group runs 13 more, lighter crash sweeps (snapshots, LZ4, xattrs, rename-exchange, reclaim, and others) in every suite above.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 05 FUZZ ═══════════════════════════ -->
+<section class="stage" id="s-fuzz" aria-labelledby="fuzz-title"
+         data-ts="2026-11-23 15:41:26" data-log="09_fuzz_hunts.log">
+  <div class="wrap">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">15:41:26 → 16:46 IST</span><span class="file">09</span><span class="file">10</span><span class="file">11</span><span class="file">13</span></div>
+      <h2 id="fuzz-title">Feed it garbage.</h2>
+      <p class="mega good" data-count="480000">480,000</p>
+      <p class="lead">
+        mutated images and pools across 120 seeded batches, with <strong class="hi">0 panics</strong>,
+        0 <code>FAILED</code> lines and 0 non-zero exits. When an image was too damaged, NXFS
+        refused to mount it cleanly instead of crashing.
+      </p>
+    </div>
+
+    <div class="grid g2 reveal">
+      <article class="fcard">
+        <span class="label">09_fuzz_hunts.log · 70 batches</span>
+        <h3>Single volume</h3>
+        <div class="big">260,000</div>
+        <div class="ratio" aria-hidden="true"><i class="a" style="width:95.6%"></i><i class="b" style="width:4.4%"></i></div>
+        <dl><dt>mounted</dt><dd>248,555</dd><dt>refused cleanly</dt><dd>11,445</dd><dt>structure-aware</dt><dd>73,541</dd><dt>repairs completed</dt><dd>44,564</dd><dt>clean after repair</dt><dd>33,819</dd><dt>left outside FSCK §2</dt><dd>10,745</dd></dl>
+      </article>
+      <article class="fcard">
+        <span class="label">11_pool_fuzz.log · 30 batches</span>
+        <h3>Mirror + RAID-Z pools</h3>
+        <div class="big">120,000</div>
+        <div class="ratio" aria-hidden="true"><i class="a" style="width:98.1%"></i><i class="b" style="width:1.9%"></i></div>
+        <dl><dt>mirror · mounted / refused</dt><dd>57,781 / 2,219</dd><dt>RAID-Z · mounted / refused</dt><dd>59,982 / 18</dd><dt>total mounted</dt><dd>117,763</dd></dl>
+      </article>
+      <article class="fcard">
+        <span class="label">10_window_equivalence.log · 10 batches</span>
+        <h3>Partial fsck = full fsck</h3>
+        <div class="big">50,000</div>
+        <div class="ratio" aria-hidden="true"><i class="a" style="width:96.2%"></i></div>
+        <dl><dt>compared</dt><dd>48,116</dd><dt>of which had findings</dt><dd>22,612</dd><dt>windowed vs full disagreements</dt><dd>0</dd></dl>
+      </article>
+      <article class="fcard">
+        <span class="label">13_boot_reader_fuzz.log · 10 batches</span>
+        <h3>Boot reader vs engine</h3>
+        <div class="big">50,000</div>
+        <div class="ratio" aria-hidden="true"><i class="a" style="width:95.6%"></i></div>
+        <dl><dt>opened by boot reader</dt><dd>47,811</dd><dt>files compared with engine</dt><dd>187,137</dd><dt>mismatches</dt><dd>0</dd></dl>
+      </article>
+    </div>
+
+    <div class="term reveal" style="margin-top:1rem">
+      <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>excerpt · 09_fuzz_hunts.log, first batch</span></div>
+<pre class="typed"><span><span class="c">## 2026-11-23T15:41:26+05:30 env NXFS_FUZZ_ITERS=5000 NXFS_FUZZ_SEED=1001 cargo test --release …</span></span><span>fuzz: 5000 mutated images (seed 0x3e9), mounted 4781, refused 219, structure-aware 1361, repairs completed 820 (clean after 633, findings outside FSCK §2 left 187)</span><span>test v12::crash_tests::fuzz_mutated_images_never_panic ... <span class="ok">ok</span></span><span>test result: <span class="ok">ok</span>. 1 passed; 0 failed; 0 ignored; 0 measured; 212 filtered out; finished in 13.98s</span></pre>
+    </div>
+    <p class="excerpt-note">
+      A note on the 10,745 repairs that didn't end clean: that damage is outside what fsck is
+      specified to repair (FSCK §2). The test doesn't treat it as a failure, and we're telling you
+      rather than leaving it out.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 06 FUSE ═══════════════════════════ -->
+<section class="stage" id="s-fuse" aria-labelledby="fuse-title"
+         data-ts="2026-11-23 16:55:09" data-log="12_fuse_mount_checks.log">
+  <div class="wrap split">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">16:55:09 IST</span><span class="file">12_fuse_mount_checks.log</span></div>
+      <h2 id="fuse-title">Mounted on a real kernel.</h2>
+      <p class="mega good" data-count="46">46</p>
+      <p class="lead">PASS · 0 FAIL. These run through a live FUSE mount covering xattrs, holes, hard links, fifos, renames over open files, and an open/rename/unlink race with zero torn reads. The run ends with a clean fsck.</p>
+    </div>
+    <div class="term scrolly reveal">
+      <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>excerpt · 12_fuse_mount_checks.log</span></div>
+<pre><span class="c">mounted: nxfs on &lt;scratchpad&gt;/gb3/mnt type fuse.nxfs (rw,nosuid,nodev,relatime,…)</span>
+<span class="ok">PASS</span> 1 MiB write in 128 KiB chunks + 256 KiB overwrite, fsync
+<span class="ok">PASS</span> truncate + chmod
+<span class="ok">PASS</span> utime sets mtime
+<span class="ok">PASS</span> symlink target
+<span class="ok">PASS</span> setxattr/getxattr
+<span class="ok">PASS</span> XATTR_CREATE on existing -&gt; EEXIST
+<span class="ok">PASS</span> XATTR_REPLACE on missing -&gt; ENODATA
+<span class="ok">PASS</span> mkfifo
+<span class="ok">PASS</span> hard link
+<span class="ok">PASS</span> posix_fallocate extends the size
+<span class="ok">PASS</span> SEEK_DATA at data
+<span class="ok">PASS</span> SEEK_HOLE after the first block
+<span class="ok">PASS</span> rename over open file: descriptor still reads the old bytes
+<span class="ok">PASS</span> unlinked open file still readable
+<span class="ok">PASS</span> 300 creates, 150 unlinks, listing
+<span class="ok">PASS</span> open/rename/unlink race: 0 torn reads
+<span class="ok">PASS</span> d_type: fifo is neither file nor dir
+<span class="ok">PASS</span> rm -rf of a nested tree
+<span class="ok">PASS</span> fstat of a directory removed while open
+<span class="ok">PASS</span> unaligned punch / zero range over preallocation
+<span class="ok">PASS</span> all FUSE checks
+unmounted: ok
+older commit slots: [1174, 1175, 1176]
+nxfs fsck: <span class="ok">0 corruption finding(s), 0 leak(s), 0 pending</span>
+<span class="ok">PASS</span> read-only remount
+<span class="ok">PASS</span> read-only subvolume refuses writes with EROFS
+<span class="ok">exit 0</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 07 STRESS ═══════════════════════════ -->
+<section class="stage" id="s-stress" aria-labelledby="stress-title"
+         data-ts="2026-11-23 16:55:26" data-log="14_fsx_fsstress.log">
+  <div class="wrap">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">16:55:26 IST</span><span class="file">14_fsx_fsstress.log</span></div>
+      <h2 id="stress-title">Hammered, then checked byte for byte.</h2>
+    </div>
+    <div class="grid g3 reveal">
+      <div class="stat good"><span class="n" data-count="5000">5,000</span><span class="k">fsx ops · 100% byte-verified</span></div>
+      <div class="stat good"><span class="n" data-count="2400">2,400</span><span class="k">disjoint fsstress ops · 0 errors</span></div>
+      <div class="stat"><span class="n" data-count="1263">1,263</span><span class="k">lost races of 2,400 contended · expected</span></div>
+    </div>
+    <p class="excerpt-note" style="margin-top:1rem">
+      The lost races are the point of that test: 8 threads fight over the same names in one directory, so
+      ENOENT and EEXIST are correct answers. Afterwards, link counts were consistent, 12 names were left and fsck was clean.
+    </p>
+    <div class="term reveal" style="margin-top:1rem">
+      <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>excerpt · 14_fsx_fsstress.log</span></div>
+<pre class="typed"><span>[FSX PROGRESS]: 5000/5000 ops verified (file size: 191112 bytes, rate: 292.3 ops/s)</span><span><span class="ok">[FSX SUCCESS]</span>: Completed 5000 operations. 100% byte-for-byte verification passed!</span><span>[FSSTRESS]: All 2400 disjoint-directory operations completed with 0 errors.</span><span>[FSSTRESS]: shared directory: 2400 contended operations, 1263 lost races (ENOENT/EEXIST), 12 names left, link counts consistent.</span><span>older commit slots: [7703, 7704, 7705]</span><span>nxfs fsck: <span class="ok">0 corruption finding(s), 0 leak(s), 0 pending</span></span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 08 KILL -9 ═══════════════════════════ -->
+<section class="stage" id="s-kill" aria-labelledby="kill-title"
+         data-ts="2026-11-23 16:56:10" data-log="15_jepsen_kill9.log">
+  <div class="wrap">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">16:56:10 IST</span><span class="file">15_jepsen_kill9.log</span></div>
+      <h2 id="kill-title"><span class="mono" style="color:var(--st-unsupported)">kill -9</span>, ten times.</h2>
+      <p class="lead">
+        Each round mounts the volume through FUSE, starts a mutation workload of 200 operations,
+        and then kills the filesystem process with SIGKILL. An offline fsck follows every round.
+      </p>
+    </div>
+
+    <ol class="rounds" aria-label="10 rounds, all passed">
+      <li><b>01</b>slots 99–101<span class="s">PASS</span></li>
+      <li><b>02</b>131–133<span class="s">PASS</span></li>
+      <li><b>03</b>186–188<span class="s">PASS</span></li>
+      <li><b>04</b>283–285<span class="s">PASS</span></li>
+      <li><b>05</b>387–389<span class="s">PASS</span></li>
+      <li><b>06</b>444–446<span class="s">PASS</span></li>
+      <li><b>07</b>484–486<span class="s">PASS</span></li>
+      <li><b>08</b>543–545<span class="s">PASS</span></li>
+      <li><b>09</b>608–610<span class="s">PASS</span></li>
+      <li><b>10</b>700–702<span class="s">PASS</span></li>
+    </ol>
+
+    <div class="term reveal">
+      <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>excerpt · 15_jepsen_kill9.log, round 1</span></div>
+<pre class="typed"><span>nxfs: formatted &lt;scratchpad&gt;/gb3/nxfs-jepsen.img (131072 blocks)</span><span>[MOUNT]: FUSE active (PID 1396212) at &lt;scratchpad&gt;/gb3/nxfs-jepsen-mount</span><span><span class="k">scripts/jepsen_metadata_fuzz.sh: line 38: 1396212 Killed</span>   "$BIN" mount "$IMG" "$MNT"</span><span>older commit slots: [99, 100, 101]</span><span>nxfs fsck: <span class="ok">0 corruption finding(s), 0 leak(s), 0 pending</span></span><span><span class="ok">[PASS]</span>: Round 1 passed: Clean consistent rollback with zero corruptions.</span></pre>
+    </div>
+    <p class="excerpt-note" style="color:var(--st-untested)">
+      ○ To be clear: this kills a process. It is not a physical power cut. No real disk was
+      powered off during qualification.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 09 PERF ═══════════════════════════ -->
+<section class="stage" id="s-perf" aria-labelledby="perf-title"
+         data-ts="2026-11-23 16:56:15" data-log="16_performance.log">
+  <div class="wrap split">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">16:56:15 IST</span><span class="file">16_performance.log</span></div>
+      <h2 id="perf-title">Honest speed.</h2>
+      <p class="lead">
+        These are small, bounded FUSE runs on the development VM (WSL2, kernel
+        6.18.58.1, 14 CPUs): 256&nbsp;MiB sequential and 2,000 files, every write fsynced.
+        Beta&nbsp;2 is shown for context. <strong class="hi">No change is claimed.</strong> The
+        differences are within the run-to-run variation we've recorded since M23c.
+      </p>
+      <p class="mute" style="font-size:.9375rem">
+        These numbers are not a comparison with other filesystems, and they are not
+        bare-metal numbers. FUSE on WSL2 sets the ceiling here.
+      </p>
+    </div>
+
+    <div class="perf reveal">
+      <div><div class="m"><span>Sequential write · 1 MiB + fsync</span><b>20.8 MiB/s</b></div>
+        <div class="b"><span>beta3</span><span class="t"><i style="width:100%"></i></span><span class="v">20.8</span></div>
+        <div class="b prev"><span>beta2</span><span class="t"><i style="width:76.9%"></i></span><span class="v">16.0</span></div></div>
+      <div><div class="m"><span>Random write · 4 KiB + fsync</span><b>125.7 IOPS</b></div>
+        <div class="b"><span>beta3</span><span class="t"><i style="width:100%"></i></span><span class="v">125.7</span></div>
+        <div class="b prev"><span>beta2</span><span class="t"><i style="width:89.1%"></i></span><span class="v">112</span></div></div>
+      <div><div class="m"><span>Append + fsync · p50 / p99</span><b>5.36 / 30.98 ms</b></div>
+        <div class="b"><span>p99 b3</span><span class="t"><i style="width:99.6%"></i></span><span class="v">30.98</span></div>
+        <div class="b prev"><span>p99 b2</span><span class="t"><i style="width:100%"></i></span><span class="v">31.1</span></div>
+        <span class="note">max 36.24 ms over 200 appends · lower is better</span></div>
+      <div><div class="m"><span>Create files</span><b>198.6 /s</b></div>
+        <div class="b"><span>beta3</span><span class="t"><i style="width:100%"></i></span><span class="v">198.6</span></div>
+        <div class="b prev"><span>beta2</span><span class="t"><i style="width:78%"></i></span><span class="v">155</span></div></div>
+      <div><div class="m"><span>Rename</span><b>129.3 /s</b></div>
+        <div class="b"><span>beta3</span><span class="t"><i style="width:100%"></i></span><span class="v">129.3</span></div>
+        <div class="b prev"><span>beta2</span><span class="t"><i style="width:78.1%"></i></span><span class="v">101</span></div></div>
+      <div><div class="m"><span>Unlink</span><b>82.6 /s</b></div>
+        <div class="b"><span>beta3</span><span class="t"><i style="width:86.9%"></i></span><span class="v">82.6</span></div>
+        <div class="b prev"><span>beta2</span><span class="t"><i style="width:100%"></i></span><span class="v">95</span></div></div>
+      <div><div class="m"><span>Sequential read · after remount</span><b>244.0 MiB/s</b></div>
+        <div class="b"><span>beta3</span><span class="t"><i style="width:100%"></i></span><span class="v">244.0</span></div>
+        <div class="b prev"><span>beta2</span><span class="t"><i style="width:86.1%"></i></span><span class="v">210</span></div></div>
+      <div><span class="note">Also logged: stat with a warm dentry cache at 20,054.8 ops/s. fsck was clean after the run.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 10 PJDFSTEST ═══════════════════════════ -->
+<section class="stage" id="s-pjd" aria-labelledby="pjd-title"
+         data-ts="2026-11-23 16:57:54" data-log="19_pjdfstest.log">
+  <div class="wrap">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">16:57:54 IST</span><span class="file">19_pjdfstest.log</span><span class="file">pjdfstest/*.tap</span></div>
+      <h2 id="pjd-title">pjdfstest: 0 failed. And here's the catch.</h2>
+      <p class="lead">
+        Of <strong class="hi">8,798</strong> assertions, <strong class="hi">3,089 passed (35.1%)</strong>
+        and <strong class="hi">0 failed</strong>. The other 5,694 (64.7%) were
+        <strong class="hi">never evaluated</strong>: they need root, and every run here is unprivileged.
+        So 35.1% is what we can show, not a POSIX score.
+      </p>
+    </div>
+
+    <div class="grid g4 reveal">
+      <div class="stat good"><span class="n" data-count="3089">3,089</span><span class="k">passed</span></div>
+      <div class="stat good"><span class="n">0</span><span class="k">real failures</span></div>
+      <div class="stat"><span class="n" data-count="5694">5,694</span><span class="k">not evaluated · need root</span></div>
+      <div class="stat"><span class="n">15</span><span class="k">todo · allowed either way</span></div>
+    </div>
+
+    <div class="pj reveal" role="img" aria-label="Per-directory pjdfstest breakdown. Every directory has 0 failures.">
+      <div class="pj-row"><span class="nm">rename <small>4857</small></span><span class="pj-bar"><i class="ok" style="flex-grow:1213"></i><i class="pv" style="flex-grow:1920"></i><i class="af" style="flex-grow:1724"></i></span></div>
+      <div class="pj-row"><span class="nm">chown <small>1497</small></span><span class="pj-bar"><i class="ok" style="flex-grow:440"></i><i class="td" style="flex-grow:14"></i><i class="pv" style="flex-grow:475"></i><i class="af" style="flex-grow:568"></i></span></div>
+      <div class="pj-row"><span class="nm">unlink <small>440</small></span><span class="pj-bar"><i class="ok" style="flex-grow:157"></i><i class="td" style="flex-grow:1"></i><i class="pv" style="flex-grow:162"></i><i class="af" style="flex-grow:120"></i></span></div>
+      <div class="pj-row"><span class="nm">link <small>359</small></span><span class="pj-bar"><i class="ok" style="flex-grow:231"></i><i class="pv" style="flex-grow:41"></i><i class="af" style="flex-grow:87"></i></span></div>
+      <div class="pj-row"><span class="nm">open <small>337</small></span><span class="pj-bar"><i class="ok" style="flex-grow:142"></i><i class="pv" style="flex-grow:181"></i><i class="af" style="flex-grow:14"></i></span></div>
+      <div class="pj-row"><span class="nm">chmod <small>327</small></span><span class="pj-bar"><i class="ok" style="flex-grow:201"></i><i class="pv" style="flex-grow:62"></i><i class="af" style="flex-grow:64"></i></span></div>
+      <div class="pj-row"><span class="nm">mknod <small>186</small></span><span class="pj-bar"><i class="ok" style="flex-grow:109"></i><i class="pv" style="flex-grow:41"></i><i class="af" style="flex-grow:36"></i></span></div>
+      <div class="pj-row"><span class="nm">rmdir <small>145</small></span><span class="pj-bar"><i class="ok" style="flex-grow:87"></i><i class="pv" style="flex-grow:30"></i><i class="af" style="flex-grow:28"></i></span></div>
+      <div class="pj-row"><span class="nm">utimensat <small>122</small></span><span class="pj-bar"><i class="ok" style="flex-grow:96"></i><i class="pv" style="flex-grow:18"></i><i class="af" style="flex-grow:8"></i></span></div>
+      <div class="pj-row"><span class="nm">mkfifo <small>120</small></span><span class="pj-bar"><i class="ok" style="flex-grow:87"></i><i class="pv" style="flex-grow:21"></i><i class="af" style="flex-grow:12"></i></span></div>
+      <div class="pj-row"><span class="nm">mkdir <small>118</small></span><span class="pj-bar"><i class="ok" style="flex-grow:80"></i><i class="pv" style="flex-grow:21"></i><i class="af" style="flex-grow:17"></i></span></div>
+      <div class="pj-row"><span class="nm">symlink <small>95</small></span><span class="pj-bar"><i class="ok" style="flex-grow:79"></i><i class="pv" style="flex-grow:13"></i><i class="af" style="flex-grow:3"></i></span></div>
+      <div class="pj-row"><span class="nm">ftruncate <small>89</small></span><span class="pj-bar"><i class="ok" style="flex-grow:74"></i><i class="pv" style="flex-grow:14"></i><i class="af" style="flex-grow:1"></i></span></div>
+      <div class="pj-row"><span class="nm">truncate <small>84</small></span><span class="pj-bar"><i class="ok" style="flex-grow:71"></i><i class="pv" style="flex-grow:13"></i></span></div>
+      <div class="pj-row"><span class="nm">chflags <small>14</small></span><span class="pj-bar"><i class="ok" style="flex-grow:14"></i></span></div>
+      <div class="pj-row"><span class="nm">granular <small>7</small></span><span class="pj-bar"><i class="ok" style="flex-grow:7"></i></span></div>
+      <div class="pj-row"><span class="nm">posix_fallocate <small>1</small></span><span class="pj-bar"><i class="ok" style="flex-grow:1"></i></span></div>
+    </div>
+    <div class="pj-key"><span class="ok">passed</span><span class="td">todo</span><span class="pv">needs root</span><span class="af">depends on a root step</span></div>
+
+    <div class="term reveal" style="margin-top:1.5rem">
+      <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>excerpt · 19_pjdfstest.log</span></div>
+<pre class="typed"><span><span class="c">dir              files trivial    ok  todo privilege after other dubious stderr</span></span><span>rename              25       6  1213     0      1920  1724     <span class="ok">0</span>       0      0</span><span>chown               11       2   440    14       475   568     <span class="ok">0</span>       0      0</span><span>TOTAL              238      71  3089    15      3012  2682     <span class="ok">0</span>       0      0</span><span>assertions 8798: passed 3089 (35.1%), not evaluated (privilege + after) 5694 (64.7%), todo 15, <span class="ok">failed 0</span></span></pre>
+    </div>
+    <p class="excerpt-note">
+      The classification follows fixed rules in <code>scripts/pjdfstest_classify.py</code>. It has produced
+      the same totals in all five runs: Beta 1, M24, M24c, Beta 2 and Beta 3.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 11 GAPS ═══════════════════════════ -->
+<section class="stage" id="s-gaps" aria-labelledby="gaps-title"
+         data-ts="2026-11-23 16:57:54" data-log="REPORT.md §4">
+  <div class="wrap">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">REPORT.md §4</span><span>what Beta 3 does not show</span></div>
+      <h2 id="gaps-title">What we haven't proven.</h2>
+    </div>
+
+    <div class="xbanner reveal" role="note">
+      <span class="chip chip--untested">Untested</span>
+      <p class="mega">xfstests: never run.</p>
+      <p style="margin:0">
+        Not once. It needs root and real block devices, and NXFS has only ever been qualified
+        unprivileged on image files. Every qualification report says so.
+      </p>
+    </div>
+
+    <div class="gaps reveal">
+      <div class="gap-item"><span class="chip chip--untested">Untested</span><span class="t">Physical power loss &amp; real disks</span><p>Qualification ran in software on image files only. SIGKILL is not a power cut.</p></div>
+      <div class="gap-item"><span class="chip chip--untested">Untested</span><span class="t">pjdfstest as root</span><p>5,694 assertions remain unevaluated.</p></div>
+      <div class="gap-item"><span class="chip chip--untested">Untested</span><span class="t">Block-device discard path</span><p>Discard logic has library tests, but the path down to a real block device was not exercised.</p></div>
+      <div class="gap-item"><span class="chip chip--unsupported">Unsupported</span><span class="t">Multi-device boot reader</span><p>The boot reader handles single-device volumes only.</p></div>
+      <div class="gap-item"><span class="chip chip--unsupported">Unsupported</span><span class="t">Pool <code>replace</code></span><p>Not available in Beta 3.</p></div>
+      <div class="gap-item"><span class="chip chip--pending">Not yet qualified</span><span class="t">Bounded-memory fsck (R2)</span><p>Deferred. A call's transient heap is measured, not bounded.</p></div>
+      <div class="gap-item"><span class="chip chip--pending">Not yet qualified</span><span class="t">POSIX compliance</span><p>Not claimed. The privileged half of pjdfstest hasn't run, and xfstests hasn't run at all.</p></div>
+      <div class="gap-item"><span class="chip chip--pending">Not yet qualified</span><span class="t">Production use</span><p>Beta 3 is a beta. Don't put data on it that you can't lose.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 12 ROADMAP ═══════════════════════════ -->
+<section class="stage" id="s-road" aria-labelledby="road-title"
+         data-ts="2026-11-23 16:57:54" data-log="roadmap · plan, not evidence">
+  <div class="wrap">
+    <div class="stage-head reveal">
+      <div class="stamp"><span class="ts">next</span><span>proposed gates · plan, not evidence</span></div>
+      <h2 id="road-title">The road to 1.0 runs straight through the gaps.</h2>
+      <p class="lead">Each gate below closes a gap listed above. None of them has dates yet, and none is shown here as done.</p>
+    </div>
+    <div class="road">
+      <div class="milestone now reveal">
+        <div class="ph">Beta 3</div><div class="when">qualified · 23 Nov 2026</div>
+        <ul><li>Full tier-3 qualification, every stage <code>exit 0</code></li><li>Heavy-sweep coverage gap found and closed</li><li>480,000 fuzzed inputs, 0 panics</li></ul>
+      </div>
+      <div class="milestone reveal">
+        <div class="ph">Beta 4</div><div class="when">proposed</div>
+        <ul><li>Root-capable VM with throwaway block devices</li><li>First xfstests run, results published either way</li><li>Privileged pjdfstest for the 5,694 unevaluated assertions</li><li>Exercise the block-device discard path</li></ul>
+      </div>
+      <div class="milestone reveal">
+        <div class="ph">RC → 1.0</div><div class="when">proposed</div>
+        <ul><li>Real disks and external hardware testers</li><li>Physical power-cut testing</li><li>Bounded-memory fsck (R2)</li><li>Every remaining gap closed or documented as unsupported</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ 13 OPEN SOURCE + HARDWARE ═══════════════════════════ -->
+<section class="stage oss" id="s-oss" aria-labelledby="oss-title"
+         data-ts="2026-11-23 16:57:54" data-log="what's next">
+  <div class="wrap split">
+    <div class="reveal">
+      <div class="stamp"><span class="ts">0x00FF</span><span>open source · external testing</span></div>
+      <h2 id="oss-title" class="big-line">Written in <span class="r">Rust</span>.<br>Going <span class="o">open&nbsp;source</span>.</h2>
+      <p class="lead">
+        The code, the tests and the qualification scripts behind every number on this page
+        will be public. Then you can run the gates yourself instead of taking our word for it.
+      </p>
+    </div>
+    <div class="reveal">
+      <h3>Want to test it on real hardware?</h3>
+      <p class="mute">
+        Real hardware is the biggest gap above, and we can't close it alone. When the repository opens,
+        we'll ask hardware testers for reports like this. Results, including the bad ones, go into the
+        next qualification report.
+      </p>
+      <div class="term">
+        <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>hardware-report.txt · template</span></div>
+<pre><span class="c"># NXFS external hardware report</span>
+nxfs version / commit :
+device (model, bus)   : NVMe / SATA / USB / SD …
+kernel + FUSE version :
+workload              :
+power cut? (how)      : yes / no
+fsck after            : 0 corruption · 0 leak · 0 pending ?
+anything surprising   :</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════ END ═══════════════════════════ -->
+<footer class="end" aria-labelledby="end-title" data-ts="2026-11-23 16:57:54" data-log="exit 0">
+  <div class="wrap">
+    <img class="mark-xl" src="assets/img/nxfs-mark.svg" alt="" width="64" height="64">
+    <h2 id="end-title" class="tuned">Stay tuned<br>for <span>updates!!</span><i class="blink" aria-hidden="true"></i></h2>
+    <p class="lead">Beta 4 is next, with xfstests, root and real disks. Check back here.</p>
+    <p class="sig">
+      Beta 3 · <span class="mono">3843290</span> · rustc 1.100.0 · 161 recorded exit statuses · <span class="ok">all 0</span><br>
+      All figures come from the Beta 3 qualification logs. Raw logs are not published here.
+    </p>
+  </div>
+</footer>
+
+<div class="hud" aria-hidden="true">
+  <div class="wrap">
+    <span class="led"></span>
+    <span class="ts" data-hud-ts>2026-11-23 13:50:02</span>
+    <span class="log" data-hud-log>00_environment.log</span>
+    <span class="ex">exit 0</span>
+  </div>
+</div>
+</body>
+</html>
